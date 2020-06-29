@@ -74,6 +74,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = {
 	"dmenu_run",
 	"-b",
+	"-h", "40",
 	"-p", "dmenu%",
 	"-nf", "#F8F8F2",
 	"-nb", "#282A36",
