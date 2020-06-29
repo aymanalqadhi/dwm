@@ -1,6 +1,8 @@
 #include "tcl.c"
 #include "fibonacci.c"
 
+#include <X11/XF86keysym.h>
+
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -71,6 +73,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
 
+static const char *termcmd[]  = { "alacritty", NULL };
+
 static const char *dmenucmd[] = {
 	"dmenu_run",
 	"-b",
@@ -88,7 +92,9 @@ static const char *dmenucmd[] = {
 	"-sf", col_gray4,
 	NULL };
 
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *decreasevol_cmd[] = { "decreasevol", "5", NULL };
+static const char *increasevol_cmd[] = { "increasevol", "5", NULL };
+static const char *togglevol_cmd[]   = { "togglevol", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -131,6 +137,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+
+	{ 0,  XF86XK_AudioRaiseVolume, spawn, {.v = increasevol_cmd } },
+	{ 0,  XF86XK_AudioLowerVolume, spawn, {.v = decreasevol_cmd } },
+	{ 0,  XF86XK_AudioMute,        spawn, {.v = togglevol_cmd } },
 };
 
 /* button definitions */
@@ -149,4 +159,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
