@@ -10,6 +10,9 @@ fi
 if [[ $platform == "freebsd" && $(which mixer) != "" ]]; then
     mixer vol -$1;
     exit 0;
+elif [[ $platform == "linux" && $(which amixer) != "" ]]; then
+    amixer sset Master $1%+
+    exit 0;
 else
     echo "[!] Unsupported platform";
     exit 2;
