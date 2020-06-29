@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+platform=$(uname | dd conv=lcase status=none);
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 amount";
+    exit 1;
+fi
+
+if [[ $platform == "freebsd" && $(which mixer) != "" ]]; then
+    mixer vol -$1;
+    exit 0;
+else
+    echo "[!] Unsupported platform";
+    exit 2;
+fi

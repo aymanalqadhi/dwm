@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+toggle_file="$HOME/.cache/togglevol"
+platform=$(uname | dd conv=lcase status=none);
+
+if [[ $platform == "freebsd" && $(which mixer) != "" ]]; then
+    if [ -f $toggle_file ]; then
+        mixer `cat $toggle_file`;
+        rm $toggle_file;
+    else
+        mixer -s vol > $toggle_file;
+        mixer vol mute;
+    fi
+    exit 0;
+else
+    echo "[!] Unsupported platform";
+    exit 2;
+fi
